@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freelancer Registration Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --card: #1a1a24;
+    --border: #2a2a3a;
+    --accent: #ff6b35;
+    --accent2: #ffd166;
+    --text: #f0f0f5;
+    --muted: #7a7a9a;
+    --success: #06d6a0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 20% 20%, rgba(255,107,53,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(255,209,102,0.05) 0%, transparent 50%);
+    animation: bgShift 8s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes bgShift {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(2%, 2%); }
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeDown 0.6s ease both;
+  }
+
+  .header .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,107,53,0.12);
+    border: 1px solid rgba(255,107,53,0.3);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 80px);
+    letter-spacing: 3px;
+    line-height: 1;
+    background: linear-gradient(135deg, #fff 0%, var(--accent2) 60%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header p {
+    color: var(--muted);
+    font-size: 15px;
+    margin-top: 12px;
+    font-weight: 300;
+  }
+
+  /* Section */
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.5s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
+  }
+
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.2s; }
+  .section:nth-child(4) { animation-delay: 0.3s; }
+  .section:nth-child(5) { animation-delay: 0.4s; }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .section-label .num {
+    width: 24px;
+    height: 24px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Bebas Neue';
+    letter-spacing: 0;
+  }
+
+  /* Field */
+  .field {
+    margin-bottom: 20px;
+  }
+
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+  }
+
+  label .req {
+    color: var(--accent);
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="number"] {
+    width: 100%;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    transition: all 0.2s;
+    outline: none;
+  }
+
+  input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255,107,53,0.12);
+    background: #16161f;
+  }
+
+  input::placeholder { color: var(--muted); opacity: 0.5; }
+
+  /* Grid for 2 cols */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 500px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  /* Skill chips */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .chip-input { display: none; }
+
+  .chip-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .chip-label:hover {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+
+  .chip-input:checked + .chip-label {
+    background: rgba(255,107,53,0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .chip-label .icon { font-size: 16px; }
+
+  /* Device checkboxes */
+  .device-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .device-input { display: none; }
+
+  .device-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .device-label:hover { border-color: var(--accent2); color: var(--text); }
+
+  .device-input:checked + .device-label {
+    background: rgba(255,209,102,0.1);
+    border-color: var(--accent2);
+    color: var(--accent2);
+  }
+
+  .device-label .check {
+    width: 18px; height: 18px;
+    border: 2px solid currentColor;
+    border-radius: 5px;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  .device-input:checked + .device-label .check::after {
+    content: '✓';
+    font-weight: 700;
+  }
+
+  .manual-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .manual-input-row input {
+    flex: 1;
+  }
+
+  .add-btn {
+    background: rgba(255,209,102,0.15);
+    border: 1.5px solid var(--accent2);
+    color: var(--accent2);
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .add-btn:hover { background: rgba(255,209,102,0.25); }
+
+  .custom-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .custom-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,209,102,0.1);
+    border: 1px solid rgba(255,209,102,0.3);
+    color: var(--accent2);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+  }
+
+  .custom-tag button {
+    background: none;
+    border: none;
+    color: currentColor;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    line-height: 1;
+    opacity: 0.7;
+  }
+
+  /* Charge fields */
+  .charge-field {
+    position: relative;
+  }
+
+  .charge-field .prefix {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent2);
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .charge-field input {
+    padding-left: 40px;
+  }
+
+  /* Submit */
+  .submit-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--accent) 0%, #ff8c42 100%);
+    border: none;
+    border-radius: 16px;
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .submit-btn:hover::after { opacity: 1; }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,107,53,0.4); }
+  .submit-btn:active { transform: translateY(0); }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Success */
+  .success-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    place-items: center;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .success-overlay.show { display: grid; }
+
+  .success-card {
+    background: var(--card);
+    border: 1px solid var(--success);
+    border-radius: 24px;
+    padding: 48px 40px;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  .success-icon {
+    width: 72px; height: 72px;
+    background: rgba(6,214,160,0.15);
+    border: 2px solid var(--success);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 24px;
+    font-size: 32px;
+  }
+
+  .success-card h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 2px;
+    color: var(--success);
+    margin-bottom: 10px;
+  }
+
+  .success-card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .success-card button {
+    margin-top: 28px;
+    padding: 12px 32px;
+    background: rgba(6,214,160,0.15);
+    border: 1.5px solid var(--success);
+    color: var(--success);
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .success-card button:hover { background: rgba(6,214,160,0.25); }
+
+  /* Error */
+  .error-msg {
+    color: #ff4757;
+    font-size: 12px;
+    margin-top: 6px;
+    display: none;
+  }
+
+  .field.error input { border-color: #ff4757; }
+  .field.error .error-msg { display: block; }
+
+  /* Note box */
+  .note-box {
+    background: rgba(255,209,102,0.06);
+    border: 1px solid rgba(255,209,102,0.2);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .note-box strong { color: var(--accent2); }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="badge">
+      <span>📋</span> REGISTRATION FORM
+    </div>
+    <h1>CREATOR<br>PROFILE</h1>
+    <p>Apni details bharo — sabkuch Google Sheet mein save ho jaayega</p>
+  </div>
+
+  <div class="note-box">
+    <strong>⚡ Setup Note:</strong> Form data Google Sheets mein save karne ke liye neeche diye steps follow karo. Ek baar Apps Script URL add karo, baad mein sab automatic hai.
+  </div>
+
+  <form id="mainForm" novalidate>
+
+    <!-- Section 1: Personal Info -->
+    <div class="section">
+      <div class="section-label"><span class="num">1</span> Personal Information</div>
+
+      <div class="field" id="f-name">
+        <label>Full Name <span class="req">*</span></label>
+        <input type="text" id="name" placeholder="Apna poora naam likho" autocomplete="off">
+        <div class="error-msg">Naam mandatory hai</div>
+      </div>
+
+      <div class="field" id="f-whatsapp">
+        <label>WhatsApp Number <span class="req">*</span></label>
+        <input type="tel" id="whatsapp" placeholder="10 digit number" maxlength="10">
+        <div class="error-msg">Valid WhatsApp number daalo (10 digits)</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field" id="f-district">
+          <label>District <span class="req">*</span></label>
+          <input type="text" id="district" placeholder="Jaise: Indore">
+          <div class="error-msg">District mandatory hai</div>
+        </div>
+        <div class="field" id="f-city">
+          <label>City <span class="req">*</span></label>
+          <input type="text" id="city" placeholder="Jaise: Vijay Nagar">
+          <div class="error-msg">City mandatory hai</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Skill -->
+    <div class="section">
+      <div class="section-label"><span class="num">2</span> Skill / Expertise</div>
+
+      <div class="field" id="f-skill">
+        <label>Apna Skill Select Karo <span class="req">*</span> <span style="color:var(--muted);font-size:11px;">(Multiple bhi chun sakte ho)</span></label>
+        <div class="chips">
+          <input class="chip-input" type="checkbox" id="s1" name="skill" value="Graphic Designer">
+          <label class="chip-label" for="s1"><span class="icon">🎨</span> Graphic Designer</label>
+
+          <input class="chip-input" type="checkbox" id="s2" name="skill" value="Video Editor">
+          <label class="chip-label" for="s2"><span class="icon">🎬</span> Video Editor</label>
+
+          <input class="chip-input" type="checkbox" id="s3" name="skill" value="Videographer">
+          <label class="chip-label" for="s3"><span class="icon">📷</span> Videographer</label>
+        </div>
+        <div class="error-msg" id="skill-error">Kam se kam ek skill select karo</div>
+      </div>
+    </div>
+
+    <!-- Section 3: Device -->
+    <div class="section">
+      <div class="section-label"><span class="num">3</span> Device / Equipment</div>
+
+      <div class="field" id="f-device">
+        <label>Device(s) jo tumhare paas hain <span class="req">*</span></label>
+        <div class="device-grid" id="deviceGrid">
+          <input class="device-input" type="checkbox" id="d1" name="device" value="Gimble">
+          <label class="device-label" for="d1"><span class="check"></span> Gimble</label>
+
+          <input class="device-input" type="checkbox" id="d2" name="device" value="Camera">
+          <label class="device-label" for="d2"><span class="check"></span> Camera</label>
+
+          <input class="device-input" type="checkbox" id="d3" name="device" value="iPhone 13">
+          <label class="device-label" for="d3"><span class="check"></span> iPhone 13</label>
+
+          <input class="device-input" type="checkbox" id="d4" name="device" value="iPhone 16">
+          <label class="device-label" for="d4"><span class="check"></span> iPhone 16</label>
+
+          <input class="device-input" type="checkbox" id="d5" name="device" value="iPhone 17">
+          <label class="device-label" for="d5"><span class="check"></span> iPhone 17</label>
+        </div>
+
+        <!-- Custom device -->
+        <div class="manual-input-row">
+          <input type="text" id="customDevice" placeholder="Aur koi device? Manually type karo...">
+          <button type="button" class="add-btn" onclick="addCustomDevice()">+ Add</button>
+        </div>
+        <div class="custom-tags" id="customDeviceTags"></div>
+        <div class="error-msg" id="device-error">Kam se kam ek device select karo</div>
+      </div>
+    </div>
+
+    <!-- Section 4: Charges -->
+    <div class="section">
+      <div class="section-label"><span class="num">4</span> Service Charges</div>
+
+      <div class="grid-2">
+        <div class="field" id="f-edit">
+          <label>✂️ Edit Charge (per video) <span style="color:var(--muted);font-size:11px;">(Optional)</span></label>
+          <div class="charge-field">
+            <span class="prefix">₹</span>
+            <input type="text" id="editCharge" placeholder="e.g. 500">
+          </div>
+          <div class="error-msg">Edit charge daalo</div>
+        </div>
+        <div class="field" id="f-shoot">
+          <label>🎥 Shoot Charge (per day) <span style="color:var(--muted);font-size:11px;">(Optional)</span></label>
+          <div class="charge-field">
+            <span class="prefix">₹</span>
+            <input type="text" id="shootCharge" placeholder="e.g. 2000">
+          </div>
+          <div class="error-msg">Shoot charge daalo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5: Edition Tools -->
+    <div class="section">
+      <div class="section-label"><span class="num">5</span> Video Editing Software</div>
+
+      <div class="field" id="f-editiontools">
+        <label>Edition Tools / Software jo tumhare paas hain <span class="req">*</span></label>
+        <div class="device-grid" id="editionToolsGrid">
+          <input class="device-input" type="checkbox" id="e1" name="editiontools" value="CapCut">
+          <label class="device-label" for="e1"><span class="check"></span> CapCut</label>
+
+          <input class="device-input" type="checkbox" id="e2" name="editiontools" value="Premiere Pro">
+          <label class="device-label" for="e2"><span class="check"></span> Premiere Pro</label>
+
+          <input class="device-input" type="checkbox" id="e3" name="editiontools" value="DaVinci Resolve">
+          <label class="device-label" for="e3"><span class="check"></span> DaVinci Resolve</label>
+
+          <input class="device-input" type="checkbox" id="e4" name="editiontools" value="After Effects">
+          <label class="device-label" for="e4"><span class="check"></span> After Effects</label>
+
+          <input class="device-input" type="checkbox" id="e5" name="editiontools" value="Adobe Motion">
+          <label class="device-label" for="e5"><span class="check"></span> Adobe Motion</label>
+        </div>
+
+        <!-- Custom edition tool -->
+        <div class="manual-input-row">
+          <input type="text" id="customEditionTool" placeholder="Aur koi tool? Manually type karo...">
+          <button type="button" class="add-btn" onclick="addCustomEditionTool()">+ Add</button>
+        </div>
+        <div class="custom-tags" id="customEditionToolTags"></div>
+        <div class="error-msg" id="editiontools-error">Kam se kam ek edition tool select karo</div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="submit-btn" id="submitBtn">
+      SUBMIT REGISTRATION →
+    </button>
+
+  </form>
+</div>
+
+<!-- Success Overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-icon">✓</div>
+    <h2>SUBMITTED!</h2>
+    <p>Tumhari details Google Sheet mein save ho gayi hai. Hum jald hi contact karenge!</p>
+    <button onclick="resetForm()">Naya Form Bharo</button>
+  </div>
+</div>
+
+<script>
+  // =====================================================
+  // GOOGLE SHEETS SCRIPT URL — YAHAN APNA URL DAALO
+  // Steps neeche diye hain
+  // =====================================================
+  // const SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxP80lmW6nNdZW4sTLMb7IkeLMPpY_x3_gY9jcHpUhp8NngcMNg1u366ScoI7i-Xwf4/exec";
+  // =====================================================
+
+  let customDevices = [];
+  let customEditionTools = [];
+
+  function addCustomDevice() {
+    const inp = document.getElementById('customDevice');
+    const val = inp.value.trim();
+    if (!val) return;
+    if (customDevices.includes(val)) { inp.value = ''; return; }
+    customDevices.push(val);
+    renderCustomDeviceTags();
+    inp.value = '';
+  }
+
+  document.getElementById('customDevice').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); addCustomDevice(); }
+  });
+
+  function addCustomEditionTool() {
+    const inp = document.getElementById('customEditionTool');
+    const val = inp.value.trim();
+    if (!val) return;
+    if (customEditionTools.includes(val)) { inp.value = ''; return; }
+    customEditionTools.push(val);
+    renderCustomEditionToolTags();
+    inp.value = '';
+  }
+
+  document.getElementById('customEditionTool').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); addCustomEditionTool(); }
+  });
+
+  function renderCustomEditionToolTags() {
+    const c = document.getElementById('customEditionToolTags');
+    c.innerHTML = customEditionTools.map((d, i) =>
+      `<div class="custom-tag">${d}<button onclick="removeEditionTool(${i})">×</button></div>`
+    ).join('');
+  }
+
+  function removeEditionTool(i) {
+    customEditionTools.splice(i, 1);
+    renderCustomEditionToolTags();
+  }
+
+  function renderCustomDeviceTags() {
+    const c = document.getElementById('customDeviceTags');
+    c.innerHTML = customDevices.map((d, i) =>
+      `<div class="custom-tag">${d}<button onclick="removeDevice(${i})">×</button></div>`
+    ).join('');
+  }
+
+  function removeDevice(i) {
+    customDevices.splice(i, 1);
+    renderCustomDeviceTags();
+  }
+
+  function getChecked(name) {
+    return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(el => el.value);
+  }
+
+  function clearError(fieldId) {
+    const el = document.getElementById(fieldId);
+    if (el) el.classList.remove('error');
+  }
+
+  function showError(fieldId) {
+    const el = document.getElementById(fieldId);
+    if (el) el.classList.add('error');
+  }
+
+  function validate() {
+    let ok = true;
+
+    const name = document.getElementById('name').value.trim();
+    if (!name) { showError('f-name'); ok = false; } else clearError('f-name');
+
+    const wa = document.getElementById('whatsapp').value.trim();
+    if (!wa || !/^\d{10}$/.test(wa)) { showError('f-whatsapp'); ok = false; } else clearError('f-whatsapp');
+
+    const dist = document.getElementById('district').value.trim();
+    if (!dist) { showError('f-district'); ok = false; } else clearError('f-district');
+
+    const city = document.getElementById('city').value.trim();
+    if (!city) { showError('f-city'); ok = false; } else clearError('f-city');
+
+    const skills = getChecked('skill');
+    if (!skills.length) { document.getElementById('skill-error').style.display = 'block'; ok = false; }
+    else document.getElementById('skill-error').style.display = 'none';
+
+    const devices = [...getChecked('device'), ...customDevices];
+    if (!devices.length) { document.getElementById('device-error').style.display = 'block'; ok = false; }
+    else document.getElementById('device-error').style.display = 'none';
+
+    const editiontools = [...getChecked('editiontools'), ...customEditionTools];
+    if (!editiontools.length) { document.getElementById('editiontools-error').style.display = 'block'; ok = false; }
+    else document.getElementById('editiontools-error').style.display = 'none';
+
+    clearError('f-edit');
+    clearError('f-shoot');
+
+    return ok;
+  }
+
+  document.getElementById('mainForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    if (!validate()) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'SUBMITTING...';
+
+    const data = {
+      timestamp: new Date().toLocaleString('hi-IN', { timeZone: 'Asia/Kolkata' }),
+      name: document.getElementById('name').value.trim(),
+      whatsapp: document.getElementById('whatsapp').value.trim(),
+      district: document.getElementById('district').value.trim(),
+      city: document.getElementById('city').value.trim(),
+      skills: getChecked('skill').join(', '),
+      devices: [...getChecked('device'), ...customDevices].join(', '),
+      editiontools: [...getChecked('editiontools'), ...customEditionTools].join(', '),
+      editCharge: '₹' + document.getElementById('editCharge').value.trim(),
+      shootCharge: '₹' + document.getElementById('shootCharge').value.trim()
+    };
+
+    if (SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+      // Demo mode — no actual submission
+      console.log('Form Data:', data);
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = 'SUBMIT REGISTRATION →';
+        document.getElementById('successOverlay').classList.add('show');
+      }, 1000);
+      return;
+    }
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      document.getElementById('successOverlay').classList.add('show');
+    } catch (err) {
+      alert('Kuch problem hui! Please try again. Console check karo.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'SUBMIT REGISTRATION →';
+    }
+  });
+
+  function resetForm() {
+    document.getElementById('mainForm').reset();
+    customDevices = [];
+    customEditionTools = [];
+    renderCustomDeviceTags();
+    renderCustomEditionToolTags();
+    document.getElementById('successOverlay').classList.remove('show');
+  }
+</script>
+
+<!--
+=================================================================
+🔧 GOOGLE SHEETS SETUP — EK BAAR KARO, HAMESHA KE LIYE KAAM KARE
+=================================================================
+
+STEP 1: Google Sheet banao
+  - sheets.google.com pe jaao
+  - Naya sheet banao: "Creator Registrations"
+  - Row 1 mein ye headers daalo (EXACTLY yahi):
+    A1: Timestamp
+    B1: Name
+    C1: WhatsApp
+    D1: District
+    E1: City
+    F1: Skills
+    G1: Devices
+    H1: Edition Tools
+    I1: Edit Charge
+    J1: Shoot Charge
+
+STEP 2: Apps Script banao
+  - Sheet ke andar: Extensions → Apps Script
+  - Saara code delete karo, ye paste karo:
+
+  ─────────────────────────────────────────────
+  function doPost(e) {
+    try {
+      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+      var data = JSON.parse(e.postData.contents);
+      sheet.appendRow([
+        data.timestamp,
+        data.name,
+        data.whatsapp,
+        data.district,
+        data.city,
+        data.skills,
+        data.devices,
+        data.editiontools,
+        data.editCharge,
+        data.shootCharge
+      ]);
+      return ContentService
+        .createTextOutput(JSON.stringify({status: 'success'}))
+        .setMimeType(ContentService.MimeType.JSON);
+    } catch(err) {
+      return ContentService
+        .createTextOutput(JSON.stringify({status: 'error', message: err.toString()}))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+  ─────────────────────────────────────────────
+
+STEP 3: Deploy karo
+  - "Deploy" → "New Deployment" click karo
+  - Type: "Web app" select karo
+  - Execute as: "Me" rakho
+  - Who has access: "Anyone" karo
+  - Deploy dabaao → URL copy karo
+
+STEP 4: URL paste karo
+  - Is HTML file mein upar line dhundho:
+    const SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+  - Wahan apna copied URL paste karo
+
+Bas! Ab form submit hoga toh Google Sheet update ho jaayegi. ✅
+=================================================================
+-->
+
+</body>
+</html>
